@@ -1,0 +1,33 @@
+# Default values for rh-acs.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+base_domain: 
+channel: stable
+installPlanApproval: Automatic
+name: rhacs-operator
+source: redhat-operators
+sourceNamespace: openshift-marketplace
+namespace: rhacs-operator
+cluster_name: CHANGEIT
+install_central: false
+central_cert_secret_name: central-default-tls-cert
+acs_cert:
+acs_key:
+central_route: CHANGEIT
+central_name: pivot-rhacs-central-services
+central_namespace: stackrox
+central_claimname: stackrox-db
+central_storageclass: standard-csi-retain
+central_db:
+  limits:
+    cpu: 8
+    memory: 16Gi
+  requests:
+    cpu: 1
+    memory: 2Gi
+scanner:
+  scannercomponent: Enabled
+  autoscaling: Enabled
+  maxreplicas: 5
+  minreplicas: 2
+  replicas: 3

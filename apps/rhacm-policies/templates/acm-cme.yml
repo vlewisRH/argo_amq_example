@@ -1,0 +1,27 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: cert-management-exp
+  namespace: open-cluster-management
+  annotations:  
+    policy.open-cluster-management.io/categories: SC System and Communications Protection
+    policy.open-cluster-management.io/controls: SC-8 Transmission Confidentiality and Integrity
+    policy.open-cluster-management.io/standards: DOD STIG  
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: CertificatePolicy
+        metadata:
+          name: policy-certificate
+        spec:
+          minimumDuration: 300h
+          namespaceSelector:
+            exclude:
+              - kube-*
+            include:
+              - default
+          remediationAction: inform
+          severity: low
+  remediationAction: inform

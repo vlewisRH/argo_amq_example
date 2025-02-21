@@ -1,0 +1,28 @@
+apiVersion: fileintegrity.openshift.io/v1alpha1
+kind: FileIntegrity
+metadata:
+  name: {{ .Values.fio.name }}
+  namespace: {{ .Values.fio.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  nodeSelector:
+      node-role.kubernetes.io/worker: ""
+{{ if .Values.fio.custom_tolerations }}
+  tolerations: |-
+{{- range $.Values.fio.tolerations }}
+    - {{ .  }}
+{{ end }}
+{{ end }}
+{{ if .Values.fio.config.enable }}
+  config: 
+    name: {{ .Values.fio.config.name }}
+    namespace: {{ .Values.fio.namespace}}
+    key: {{ .Values.fio.config.name }}
+    gracePeriod: {{ .Values.fio.config.name }}
+    maxBackups: {{ .Values.fio.config.name }}
+    initialDelay: {{ .Values.fio.config.name }}
+{{ else }}
+  config: {}
+{{ end }}
+  debug: {{ .Values.fio.debug }}
