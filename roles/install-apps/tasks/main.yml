@@ -9,17 +9,17 @@
     source_path: !unsafe '{{ path }}'
   no_log: true
 
-- name: set env fact
+- name: Set env fact
   ansible.builtin.set_fact:
     cluster_env: "{{ item }}"
   when: item is defined
 
-- name: set env fact
+- name: Set env fact
   ansible.builtin.set_fact:
     cluster_env: "{{ env }}"
   when: env != "all"
 
-- name: Include env vars
+- name: Fetch env vars
   include_vars: "vars/{{ cluster_env }}/main.yml"
 
 - name: Create applicationset

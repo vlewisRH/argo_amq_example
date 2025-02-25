@@ -1,0 +1,26 @@
+---
+# vars file for ocp-installer
+gitops_repo_url: https://gitea-route-vp-gitea.apps.cluster-rdq6l.rdq6l.sandbox100.opentlc.com/gitea_admin/demo_playbook.git
+git_branch: main
+gitops_namespace: openshift-gitops
+metadata_name: gitops-apps
+# mgmt_cluster: security
+# vault_path: rh-ops/data/
+
+# envs:
+# - security
+# - production
+# - preprod
+# - pentest
+
+# teams:
+#   - name: "team_name"
+#     groups: 
+#       - group_name: <groupname>
+#         users: {}
+#     roles: 
+#       - role_name: <rolename>
+#         description: "description goes here"
+#         policies: {}
+#         groups: {}
+          
