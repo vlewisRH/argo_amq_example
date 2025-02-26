@@ -1,0 +1,22 @@
+---
+appset_name: 'appset-production'
+app_path: 'apps'
+cluster_name: development
+target_server: changeMe
+
+app_list:
+- console-banner
+- container-security-operator
+- file-integrity-operator
+- openshift-compliance-operator
+- rhacs
+
+override_values:
+# console-banner
+- name: background_color
+  value: '#12890e' # green
+- name: text_color
+  value: '#FFFFFF' # white
+# rhacs
+- name: cluster_name
+  value: "{{ cluster_name }}"
