@@ -1,0 +1,1 @@
+Broker reference: https://github.com/mcaimi/amq-broker-helm

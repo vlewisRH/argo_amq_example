@@ -1,22 +1,15 @@
 ---
-appset_name: 'appset-production'
-app_path: 'apps'
-cluster_name: production
+appset_name: 'appset-prod'
+app_path: 'brokers'
+cluster_name: dev
 target_server: changeMe
 
-app_list:
-- console-banner
-- container-security-operator
-- file-integrity-operator
-- openshift-compliance-operator
-- rhacs
+broker-list:
+- broker-name-in-brokers-directory
 
 override_values:
-# console-banner
-- name: background_color
-  value: '#12890e' # green
-- name: text_color
-  value: '#FFFFFF' # white
-# rhacs
-- name: cluster_name
-  value: "{{ cluster_name }}"
+# values that will be overwritten
+- name: value_1
+  value: 'value'
+- name: value_2
+  value: 'value'
