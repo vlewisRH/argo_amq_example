@@ -3,6 +3,6 @@
 - name: Install Apps
   hosts: localhost
   vars_files:
-    - vars/all/main.yml
+    - roles/install-apps/vars/all/main.yml
   roles:
     - install-apps

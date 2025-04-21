@@ -12,7 +12,7 @@ spec:
       revision: '{{ git_branch }}'
       directories:
 {% if app_list is defined %}
-{% for app in app_list %}
+{% for broker in broker_list %}
       - path: "{{ app_path }}/{{ app }}"
 {% endfor %}
 {% endif %}

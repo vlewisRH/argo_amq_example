@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ app_name }}
+  namespace: {{ gitops_namespace }}
+  labels:
+    app: {{ app_name }}
+    velero.io/exclude-from-backup: "false"
+spec:
+  source:
+    path: "{{ app_path }}/{{ app_name }}"
+    repoURL: {{ gitops_repo_url }}
+    targetRevision: {{ git_branch }}
+    plugin:
+      env:
+        - name: HELM_VALUES
+          value: |
+            gitops_repo_url: '{{ gitops_repo_url }}'
+            gitops_namespace: '{{ gitops_namespace }}'
+            cluster_name: '{{ cluster_env }}'
+            targetrevision: '{{ git_branch }}'
+{% if override_values is defined %}
+{% for override_value in override_values %}
+            {{ override_value.name }}: '{{ override_value.value }}'
+{% endfor %}
+{% endif %}
+  destination:
+    namespace: {{ gitops_namespace}}
+    server: {{ target_server }}
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+    automated:
+      selfHeal: true
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - CreateNamespace=true
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+ 

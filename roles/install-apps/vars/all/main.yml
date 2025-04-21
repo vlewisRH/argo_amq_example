@@ -4,7 +4,11 @@ gitops_repo_url: git-repo-url
 git_branch: main
 gitops_namespace: openshift-gitops
 metadata_name: gitops-apps
+app_path: brokers
 
+broker_lists:
+- broker-example-1
+- broker-example-2
 
 # envs:
 # - dev
