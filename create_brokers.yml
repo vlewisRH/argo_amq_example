@@ -1,8 +1,8 @@
 #!/usr/local/bin/ansible-playbook
 ---
-- name: Install Apps
+- name: Create Brokers
   hosts: localhost
   vars_files:
     - roles/install-apps/vars/all/main.yml
   roles:
-    - install-apps
+    - create-brokers

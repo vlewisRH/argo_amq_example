@@ -1,0 +1,27 @@
+---
+# tasks file for create-standalone
+
+---
+- name: Set argo apps name
+  ansible.builtin.set_fact:
+    metadata_name: !unsafe '{{ path.basename }}'
+  no_log: true
+
+- name: Set source Path
+  ansible.builtin.set_fact:
+    source_path: !unsafe '{{ path }}'
+  no_log: true
+
+- name: set env fact
+  ansible.builtin.set_fact:
+    cluster_env: "{{ item }}"
+  when: item is defined
+
+- name: Include env vars
+  include_vars: "vars/main.yml"
+
+- name: Create application
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'argo/app.yml.j2') }}"
+    apply: true

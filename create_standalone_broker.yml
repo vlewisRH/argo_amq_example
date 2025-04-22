@@ -1,0 +1,8 @@
+#!/usr/local/bin/ansible-playbook
+---
+- name: Create Standalone
+  hosts: localhost
+  vars_files:
+    - roles/create-standalone/vars/main.yml
+  roles:
+    - create-standalone

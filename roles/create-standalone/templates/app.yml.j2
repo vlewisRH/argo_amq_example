@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ app_name }}
+  name: {{ broker_name }}
   namespace: {{ gitops_namespace }}
   labels:
-    app: {{ app_name }}
+    app: {{ broker_name }}
     velero.io/exclude-from-backup: "false"
 spec:
   source:
-    path: "{{ app_path }}/{{ app_name }}"
+    path: "broker_template"
     repoURL: {{ gitops_repo_url }}
     targetRevision: {{ git_branch }}
     plugin:
@@ -17,7 +17,7 @@ spec:
           value: |
             gitops_repo_url: '{{ gitops_repo_url }}'
             gitops_namespace: '{{ gitops_namespace }}'
-            cluster_name: '{{ cluster_env }}'
+            {# cluster_name: '{{ cluster_env }}' #}
             targetrevision: '{{ git_branch }}'
 {% if override_values is defined %}
 {% for override_value in override_values %}
