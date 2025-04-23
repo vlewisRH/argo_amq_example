@@ -11,10 +11,10 @@ app_name: standalone-broker-test
 
 overide_values:
   # Uncommit below to overide default values
-  # - application:
+  - application:
   #   name: amq-broker-artemis
   #   amq_broker_version: 7.11
-  #   amq_broker_image: registry.redhat.io/amq7/amq-broker
+    amq_broker_image: registry.redhat.io/amq7/amq-broker-rhel8-operator
   #   pullPolicy: IfNotPresent
   #   persistent: true
   #   volume_capacity: "1G"
