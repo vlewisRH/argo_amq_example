@@ -30,7 +30,7 @@ spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
     automated:
-      selfHeal: true
+      selfHeal: false
     syncOptions:
     - RespectIgnoreDifferences=true
     - CreateNamespace=true
@@ -39,6 +39,6 @@ spec:
     automated:
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=false
 
  
