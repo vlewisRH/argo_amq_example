@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ broker_name }}
+  name: {{ app_name }}
   namespace: {{ gitops_namespace }}
   labels:
-    app: {{ broker_name }}
+    app: {{ app_name }}
     velero.io/exclude-from-backup: "false"
 spec:
   source:
-    path: "broker_template"
+    path: 'broker_template/amq-artemis-broker'
     repoURL: {{ gitops_repo_url }}
     targetRevision: {{ git_branch }}
     plugin:
@@ -25,8 +25,8 @@ spec:
 {% endfor %}
 {% endif %}
   destination:
-    namespace: {{ gitops_namespace}}
-    server: {{ target_server }}
+    namespace: {{ gitops_namespace }}
+    server: {{ gitops_server }}
   syncPolicy:
     preserveResourcesOnDeletion: true
     automated:

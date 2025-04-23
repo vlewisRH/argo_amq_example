@@ -1,208 +1,212 @@
 ---
 # vars file for create-standalone
 
-gitops_repo_url: git-repo-url
+gitops_repo_url: https://github.com/vlewisRH/argo_amq_example.git
 git_branch: main
 gitops_namespace: openshift-gitops
+gitops_server: https://kubernetes.default.svc
 metadata_name: artemis-brokers
+app_name: standalone-broker-test
+
 
 overide_values:
-  - application:
-    name: amq-broker-artemis
-    amq_broker_version: 7.11
-    amq_broker_image: registry.redhat.io/amq7/amq-broker
-    pullPolicy: IfNotPresent
-    persistent: true
-    volume_capacity: "1G"
-    replicas: 1
-    storageclass: default
-    # this is used if platform type is set as "kubernetes"
-    pullSecretName: redhat-pullsecret
-  - service:
-    console:
-      - name: jolokia
-        description: "The Jolokia Management Console Service"
-        protocol: TCP
-        port: 8161
-    acceptors:
-      - name: multiplex
-        description: "Multiplexed protocol endpoint (CORE+All the others)"
-        protocol: TCP
-        # when tls is enabled, all acceptors are tls-protected.
-        # this behaviour can be overridden by marking the acceptor as non-tls
-        # use_tls: false
-        port: 61616
-        # if needed, override the protocols here.
-        # default values are specified in the "parameters" section below
-        # amq_protocols: "CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE"
-        # also, additional properties for a single acceptor can be set here
-        # acceptor_params:
-        #  - key: supportAdvisory
-        #    value: false
-        #  - key: suppressInternalManagementObjects
-        #    value: false
-  - ping_service:
-    name: "{{ .Values.application.name }}-ping-svc"
-    port: 8888
-    jgroups:
-      bind_port: 7800
-  - nodeport:
-    port: 30003
-    service: multiplex
-    enabled: true
-  - passthrough_route:
-    hostname: multiplex-amq
-    enabled: false
-    service: multiplex
-  # only relevant for deployment on kubernetes
-  - ingress:
-    # the ingress rule domain
-    domain: kubernetes.local
-    # passthrough ingress rule: only relevant for TLS enabled brokers
-    passthrough:
-      path: "/"
-      service: multiplex
-      enabled: true
-    # jolokia console ingress rule. optional tls certificates can be configured here
-    console:
-      path: "/"
-      service: jolokia
-      enabled: true
-      tls: false
-      tlsSecretName: "amq-console-ingress-certs"
-      cert: ingress_console.crt
-      key: ingress_console.key
-  - tls:
-      secret_mount_path: "/etc/amq-secret-volume"
-      keystore: keystore.ks
-      truststore: keystore.ts
-      keystore_password: kspwd
-      truststore_password: tspwd
-  - parameters:
-      tls_enabled: false
-      jolokia_passthrough: false
-      append_ns: false
-      openshift_appdomain: apps.cluster.local
-      amq_protocols: "openwire,amq,stomp,mqtt,hornetq,core"
-      amq_broker_name: "broker"
-      amq_global_max_size: "200 mb"
-      amq_require_login: False
-      amq_extra_args: ""
-      amq_anycast_prefix: "jmx.queue."
-      amq_multicast_prefix: "jmx.topic."
-      amq_journal_type: "nio"
-      ssl_provider: "jdk" # alternative is openssl
-      amq_data_dir: "/opt/amq/data"
-      amq_force_addresses_cleanup: True # if true remove all queues that are not declared here upon chart update
+  # Uncommit below to overide default values
+  # - application:
+  #   name: amq-broker-artemis
+  #   amq_broker_version: 7.11
+  #   amq_broker_image: registry.redhat.io/amq7/amq-broker
+  #   pullPolicy: IfNotPresent
+  #   persistent: true
+  #   volume_capacity: "1G"
+  #   replicas: 1
+  #   storageclass: default
+  #   # this is used if platform type is set as "kubernetes"
+  #   pullSecretName: redhat-pullsecret
+  # - service:
+  #   console:
+  #     - name: jolokia
+  #       description: "The Jolokia Management Console Service"
+  #       protocol: TCP
+  #       port: 8161
+  #   acceptors:
+  #     - name: multiplex
+  #       description: "Multiplexed protocol endpoint (CORE+All the others)"
+  #       protocol: TCP
+  #       # when tls is enabled, all acceptors are tls-protected.
+  #       # this behaviour can be overridden by marking the acceptor as non-tls
+  #       # use_tls: false
+  #       port: 61616
+  #       # if needed, override the protocols here.
+  #       # default values are specified in the "parameters" section below
+  #       # amq_protocols: "CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE"
+  #       # also, additional properties for a single acceptor can be set here
+  #       # acceptor_params:
+  #       #  - key: supportAdvisory
+  #       #    value: false
+  #       #  - key: suppressInternalManagementObjects
+  #       #    value: false
+  # - ping_service:
+  #   name: "{{ .Values.application.name }}-ping-svc"
+  #   port: 8888
+  #   jgroups:
+  #     bind_port: 7800
+  # - nodeport:
+  #   port: 30003
+  #   service: multiplex
+  #   enabled: true
+  # - passthrough_route:
+  #   hostname: multiplex-amq
+  #   enabled: false
+  #   service: multiplex
+  # # only relevant for deployment on kubernetes
+  # - ingress:
+  #   # the ingress rule domain
+  #   domain: kubernetes.local
+  #   # passthrough ingress rule: only relevant for TLS enabled brokers
+  #   passthrough:
+  #     path: "/"
+  #     service: multiplex
+  #     enabled: true
+  #   # jolokia console ingress rule. optional tls certificates can be configured here
+  #   console:
+  #     path: "/"
+  #     service: jolokia
+  #     enabled: true
+  #     tls: false
+  #     tlsSecretName: "amq-console-ingress-certs"
+  #     cert: ingress_console.crt
+  #     key: ingress_console.key
+  # - tls:
+  #     secret_mount_path: "/etc/amq-secret-volume"
+  #     keystore: keystore.ks
+  #     truststore: keystore.ts
+  #     keystore_password: kspwd
+  #     truststore_password: tspwd
+  # - parameters:
+  #     tls_enabled: false
+  #     jolokia_passthrough: false
+  #     append_ns: false
+  #     openshift_appdomain: apps.cluster.local
+  #     amq_protocols: "openwire,amq,stomp,mqtt,hornetq,core"
+  #     amq_broker_name: "broker"
+  #     amq_global_max_size: "200 mb"
+  #     amq_require_login: False
+  #     amq_extra_args: ""
+  #     amq_anycast_prefix: "jmx.queue."
+  #     amq_multicast_prefix: "jmx.topic."
+  #     amq_journal_type: "nio"
+  #     ssl_provider: "jdk" # alternative is openssl
+  #     amq_data_dir: "/opt/amq/data"
+  #     amq_force_addresses_cleanup: True # if true remove all queues that are not declared here upon chart update
 
-  - cluster:
-      jgroupsCfg: "jgroups-ping.xml"
-      refreshTimeout: 10000
-      connector:
-        ref: multiplex
-        port: 61616
+  # - cluster:
+  #     jgroupsCfg: "jgroups-ping.xml"
+  #     refreshTimeout: 10000
+  #     connector:
+  #       ref: multiplex
+  #       port: 61616
 
-  - templates:
-      service: "{{ .Values.application.name }}-svc"
-      service_account: "{{ .Values.application.name }}-sa"
-      k8s_role: "{{ .Values.application.name }}-role"
-      k8s_rolebinding: "{{ .Values.application.name }}-rolebinding"
-      deployment: "{{ .Values.application.name }}-dc"
-      route: "{{ .Values.application.name }}-route"
-      broker_image: "{{ .Values.application.amq_broker_image }}:{{ .Values.application.amq_broker_version }}"
-      override_cm: "{{ .Values.application.name }}-override-cm"
-      config_cm: "{{ .Values.application.name }}-config-cm"
-      app_secret: "{{ .Values.application.name }}-secret"
-      app_certificates: "{{ .Values.application.name }}-certificates"
-      pvc_name: "{{ .Values.application.name }}-persistent-volume"
+  # - templates:
+  #     service: "{{ .Values.application.name }}-svc"
+  #     service_account: "{{ .Values.application.name }}-sa"
+  #     k8s_role: "{{ .Values.application.name }}-role"
+  #     k8s_rolebinding: "{{ .Values.application.name }}-rolebinding"
+  #     deployment: "{{ .Values.application.name }}-dc"
+  #     route: "{{ .Values.application.name }}-route"
+  #     broker_image: "{{ .Values.application.amq_broker_image }}:{{ .Values.application.amq_broker_version }}"
+  #     override_cm: "{{ .Values.application.name }}-override-cm"
+  #     config_cm: "{{ .Values.application.name }}-config-cm"
+  #     app_secret: "{{ .Values.application.name }}-secret"
+  #     app_certificates: "{{ .Values.application.name }}-certificates"
+  #     pvc_name: "{{ .Values.application.name }}-persistent-volume"
 
-  - admin:
-      user: admin
-      password: password
-      cluster_user: cadmin
-      cluster_password: cpassword
-      role: "admin"
+  # - admin:
+  #     user: admin
+  #     password: password
+  #     cluster_user: cadmin
+  #     cluster_password: cpassword
+  #     role: "admin"
 
-  - security:
-      enabled: true
-      # Names of additional secrets to mount into configuration folder.
-      secrets: []
-      createSecret: true
-      jaasUsers:
-        # Secret key entry name for Username password properties file. Override when files is provided by existing Secret.
-        key: artemis-users.properties
+  # - security:
+  #     enabled: true
+  #     # Names of additional secrets to mount into configuration folder.
+  #     secrets: []
+  #     createSecret: true
+  #     jaasUsers:
+  #       # Secret key entry name for Username password properties file. Override when files is provided by existing Secret.
+  #       key: artemis-users.properties
 
-  # Add more users to this configuration
-  # Any users that gets assigned the .admin.role
-  # role name becomes an additional administrator
-  - users: []
-  #  - name: demouser
-  #    password: "demo"
-  #    roles:
-  #      - user
-  #  - name: anotheruser
-  #    password: "demo1"
-  #    roles:
-  #      - user
-  #
-  - queues:
-      defaults:
-        maxDeliveryAttempts: 3
-        redeliveryDelayMultiplier: 1
-        redeliveryDelay: 5000
-        maxRedeliveryDelay: 50000
-        maxSizeBytes: "100 mb"
-        addressFullPolicy: "PAGE"
-        messageCounterHistoryDayLimit: 10
-      addresses: []
-    #  - name: QUEUE_1
-    #    type: anycast # for queues, choose 'multicast' for topics
-    #    dlq_address: QUEUE_1_DLQ
-    #    expiry_address:
-    #    maxDeliveryAttempts:
-    #    redeliveryDelayMultiplier:
-    #    redeliveryDelay:
-    #    maxRedeliveryDelay:
-    #    maxSizeBytes:
-    #    messageCounterHistoryDayLimit:
-    #    addressFullPolicy:
-    #    permissions:
-    #      - grant: consume
-    #        roles:
-    #          - admin
-    #          - user
-    #      - grant: browse
-    #        roles:
-    #          - admin
-    #          - user
-    #      - grant: send
-    #        roles:
-    #          - admin
-    #          - user
-    #      - grant: manage
-    #        roles:
-    #          - admin
-    #      #- grant: createNonDurableQueue # uncomment this when declaring topics (with type: multicast)
-    #      #  roles:
-    #      #    - admin
-    #      #    - user
+  # # Add more users to this configuration
+  # # Any users that gets assigned the .admin.role
+  # # role name becomes an additional administrator
+  # - users: []
+  # #  - name: demouser
+  # #    password: "demo"
+  # #    roles:
+  # #      - user
+  # #  - name: anotheruser
+  # #    password: "demo1"
+  # #    roles:
+  # #      - user
+  # #
+  # - queues:
+  #     defaults:
+  #       maxDeliveryAttempts: 3
+  #       redeliveryDelayMultiplier: 1
+  #       redeliveryDelay: 5000
+  #       maxRedeliveryDelay: 50000
+  #       maxSizeBytes: "100 mb"
+  #       addressFullPolicy: "PAGE"
+  #       messageCounterHistoryDayLimit: 10
+  #     addresses: []
+  #   #  - name: QUEUE_1
+  #   #    type: anycast # for queues, choose 'multicast' for topics
+  #   #    dlq_address: QUEUE_1_DLQ
+  #   #    expiry_address:
+  #   #    maxDeliveryAttempts:
+  #   #    redeliveryDelayMultiplier:
+  #   #    redeliveryDelay:
+  #   #    maxRedeliveryDelay:
+  #   #    maxSizeBytes:
+  #   #    messageCounterHistoryDayLimit:
+  #   #    addressFullPolicy:
+  #   #    permissions:
+  #   #      - grant: consume
+  #   #        roles:
+  #   #          - admin
+  #   #          - user
+  #   #      - grant: browse
+  #   #        roles:
+  #   #          - admin
+  #   #          - user
+  #   #      - grant: send
+  #   #        roles:
+  #   #          - admin
+  #   #          - user
+  #   #      - grant: manage
+  #   #        roles:
+  #   #          - admin
+  #   #      #- grant: createNonDurableQueue # uncomment this when declaring topics (with type: multicast)
+  #   #      #  roles:
+  #   #      #    - admin
+  #   #      #    - user
 
-  # Add Metrics and Prometheus ServiceMonitor for collecting metrics
-  - metrics:
-      enabled: false
-      jvm_memory: true
-      jvm_gc: false
-      jvm_threads: false
-      servicemonitor:
-        port: 8161
-        interval: 20s
+  # # Add Metrics and Prometheus ServiceMonitor for collecting metrics
+  # - metrics:
+  #     enabled: false
+  #     jvm_memory: true
+  #     jvm_gc: false
+  #     jvm_threads: false
+  #     servicemonitor:
+  #       port: 8161
+  #       interval: 20s
 
-  # k8s resources
-  - resources: {}
-    #  limits:
-    #    cpu: 1000m
-    #    memory: 2000Mi
-    #  requests:
-    #    cpu: 200m
-    #    memory: 1000Mi
-    #
+  # # k8s resources
+  # - resources: {}
+  #   #  limits:
+  #   #    cpu: 1000m
+  #   #    memory: 2000Mi
+  #   #  requests:
+  #   #    cpu: 200m
+  #   #    memory: 1000Mi
+  #   #
