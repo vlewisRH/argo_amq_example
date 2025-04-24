@@ -2,7 +2,7 @@
 # vars file for create-standalone
 
 gitops_repo_url: https://github.com/vlewisRH/argo_amq_example.git
-git_branch: main
+git_branch: template2
 gitops_namespace: openshift-gitops
 gitops_server: https://kubernetes.default.svc
 metadata_name: artemis-brokers
@@ -11,7 +11,7 @@ app_name: standalone-broker-test
 
 overide_values:
   - amq_broker:
-    name: amq-broker-test
+    name: '{{ app_name }}'
   #   namespace: openshift-operators
   #   channel: 7.10.x
   #   installPlanApproval: Manual
