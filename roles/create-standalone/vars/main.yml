@@ -11,7 +11,7 @@ app_name: standalone-broker-test
 
 overide_values:
   - amq_broker:
-    name: '{{ app_name }}'
+    name: standalone-broker-test
   #   namespace: openshift-operators
   #   channel: 7.10.x
   #   installPlanApproval: Manual
