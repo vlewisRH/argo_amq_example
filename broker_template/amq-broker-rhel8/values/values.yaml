@@ -4,7 +4,7 @@
 amq_broker:
   name: amq-broker-rhel8
   namespace: openshift-operators
-  channel: 7.10.x
+  channel: 7.12.x
   installPlanApproval: Manual
   source: redhat-operators
   sourceNamespace: openshift-marketplace

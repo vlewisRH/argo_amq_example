@@ -24,21 +24,23 @@ spec:
             {{ override_value.name }}: '{{ override_value.value }}'
 {% endfor %}
 {% endif %}
-  destination:
-    namespace: {{ gitops_namespace }}
-    server: {{ gitops_server }}
+  ignoreDifferences:
+    - group: '*'
+      kind: "Project"
+      jsonPointers:
+      - /metadata/annotations
+      - /metadata/labels
+    - group: '*'
+      kind: '*'
+      jqPathExpressions:
+      - .metadata | select(.name == "etcd")
   syncPolicy:
     preserveResourcesOnDeletion: true
     automated:
-      selfHeal: false
-    syncOptions:
-    - RespectIgnoreDifferences=true
-    - CreateNamespace=true
-  project: default
-  syncPolicy:
-    automated:
       selfHeal: true
     syncOptions:
-      - CreateNamespace=false
-
- 
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+  destination:
+    server: {{ target_server }}
+    namespace: {{ gitops_namespace }}
