@@ -1,7 +1,7 @@
 apiVersion: project.openshift.io/v1
 kind: Project
 metadata:
-  name: amq-broker-rhel8
+  name: {{ .Values.amq_broker.name }}
 spec:
   finalizers:
     - kubernetes
