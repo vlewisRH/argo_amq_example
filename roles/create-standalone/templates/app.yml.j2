@@ -13,14 +13,14 @@ spec:
     path: 'broker_template/amq-broker-rhel8'
     repoURL: {{ gitops_repo_url }}
     targetRevision: {{ git_branch }}
-    helm:
+    {# helm:
       parameters:
 {% if override_values is defined %}
 {% for override_value in override_values %}
         - name: {{ override_value.name }}
           values: '{{ override_value.value }}'
 {% endfor %}
-{% endif %}
+{% endif %} #}
   ignoreDifferences:
     - group: '*'
       kind: "Project"
