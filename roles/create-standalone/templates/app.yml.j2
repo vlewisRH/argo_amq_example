@@ -3,9 +3,10 @@ kind: Application
 metadata:
   name: {{ app_name }}
   namespace: {{ gitops_namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
   labels:
     app: {{ app_name }}
-    velero.io/exclude-from-backup: "false"
 spec:
   project: default
   source:
@@ -18,7 +19,6 @@ spec:
           value: |
             gitops_repo_url: '{{ gitops_repo_url }}'
             gitops_namespace: '{{ gitops_namespace }}'
-            {# cluster_name: '{{ cluster_env }}' #}
             targetrevision: '{{ git_branch }}'
 {% if override_values is defined %}
 {% for override_value in override_values %}
