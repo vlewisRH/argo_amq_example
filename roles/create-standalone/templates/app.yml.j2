@@ -21,7 +21,7 @@ spec:
           values: '{{ override_value.value }}'
 {% endfor %}
 {% endif %} #}
-  ignoreDifferences:
+  {# ignoreDifferences:
     - group: '*'
       kind: "Project"
       jsonPointers:
@@ -30,7 +30,7 @@ spec:
     - group: '*'
       kind: '*'
       jqPathExpressions:
-      - .metadata | select(.name == "etcd")
+      - .metadata | select(.name == "etcd") #}
   syncPolicy:
     preserveResourcesOnDeletion: true
     automated:
