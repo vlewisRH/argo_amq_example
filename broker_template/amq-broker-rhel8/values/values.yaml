@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 amq_broker:
-  name: amq-broker-rhel8
+  broker_name: amq-broker-rhel8
   namespace: openshift-operators
   channel: 7.12.x
   installPlanApproval: automatic
