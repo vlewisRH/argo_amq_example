@@ -7,8 +7,9 @@ metadata:
     app: {{ app_name }}
     velero.io/exclude-from-backup: "false"
 spec:
+  project: default
   source:
-    path: 'broker_template/amq-artemis-broker'
+    path: 'broker_template/amq-broker-rhel8'
     repoURL: {{ gitops_repo_url }}
     targetRevision: {{ git_branch }}
     plugin:

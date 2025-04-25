@@ -6,12 +6,12 @@ git_branch: template2
 gitops_namespace: openshift-gitops
 gitops_server: https://kubernetes.default.svc
 metadata_name: artemis-brokers
-app_name: standalone-broker-test
+app_name: amq-broker-rhel8
 
 
 overide_values:
-  - amq_broker:
-    name: standalone-broker-test
+  # - amq_broker:
+  #   name: standalone-broker-test
   #   namespace: openshift-operators
   #   channel: 7.10.x
   #   installPlanApproval: Manual
