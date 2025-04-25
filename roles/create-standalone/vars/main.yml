@@ -9,7 +9,7 @@ metadata_name: artemis-brokers
 app_name: amq-broker-rhel8
 
 
-overide_values:
+# overide_values:
   # - amq_broker:
   #   name: standalone-broker-test
   #   namespace: openshift-operators
