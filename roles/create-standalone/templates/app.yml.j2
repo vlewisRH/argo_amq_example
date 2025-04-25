@@ -41,7 +41,7 @@ spec:
       selfHeal: true
     syncOptions:
       - RespectIgnoreDifferences=true
-      - CreateNamespace=true
+      - CreateNamespace=false
   destination:
     server: {{ gitops_server }}
     namespace: {{ gitops_namespace }}
