@@ -13,6 +13,9 @@ spec:
     path: 'broker_template/amq-broker-rhel8'
     repoURL: {{ gitops_repo_url }}
     targetRevision: {{ git_branch }}
+    helm:
+      valueFiles:
+        values.yaml
   syncPolicy:
     automated:
       selfHeal: true
