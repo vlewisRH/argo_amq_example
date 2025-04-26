@@ -15,7 +15,7 @@ spec:
     targetRevision: {{ git_branch }}
     helm:
       valueFiles:
-        - values.yaml
+        - /values/values.yaml
   syncPolicy:
     automated:
       selfHeal: true
