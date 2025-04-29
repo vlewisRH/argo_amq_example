@@ -15,7 +15,7 @@
   include_vars: "vars/main.yml"
 
 - name: Include vault vars
-  include_vars: ../configs.yml
+  include_vars: {{ configs_src }}
 
 - name: Create configmap
   kubernetes.core.k8s:

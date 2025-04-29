@@ -2,11 +2,12 @@
 # vars file for create-standalone
 
 gitops_repo_url: https://github.com/vlewisRH/argo_amq_example.git
-git_branch: minimal
+git_branch: main
 gitops_namespace: openshift-gitops
 gitops_server: https://kubernetes.default.svc
 metadata_name: artemis-brokers
 app_name: amq-broker-rhel8
+configs_src: ../configs.yml
 
 
 # overide_values:
