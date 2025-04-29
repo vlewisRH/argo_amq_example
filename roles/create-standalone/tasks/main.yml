@@ -15,7 +15,16 @@
   include_vars: "vars/main.yml"
 
 - name: Include vault vars
-  include_vars: ../configs.yml
+  include_vars: {{ configs_src }}
+
+- name: Create configmap
+  kubernetes.core.k8s:
+    host: '{{ cluster_url }}'
+    api_key: '{{ api_token }}'
+    verify_ssl: false
+    state: present
+    definition: "{{ lookup('template', 'gitops-cm.yml.j2') }}"
+    apply: true
 
 - name: Create application
   kubernetes.core.k8s:

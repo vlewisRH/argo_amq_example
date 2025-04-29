@@ -1,0 +1,39 @@
+# Default values for sonarqube.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+amq_broker:
+  broker_name: amq-broker-rhel8
+  namespace: openshift-operators
+  channel: 7.12.x
+  installPlanApproval: automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  adminUser: admin
+  adminPassword: changeit
+  acceptor_name: artemis
+  acceptor_is_exposed: true
+  acceptor_protocols: 'amqp,core,stomp'
+  acceptor_port: 61617
+  acceptor_sslEnabled: false
+  acceptor_sslSecret: placeholder
+  console_expose: true
+  console_sslEnabled: false
+  console_sslSecret: placeholder
+  deploymentPlan_size: 1
+  deploymentPlan_image: placeholder
+  deploymentPlan_journalType: aio
+  deploymentPlan_persistenceEnabled: true
+  deploymentPlan_messageMigration: true
+  deploymentPlan_requireLogin: true
+  deploymentPlan_resources_limits_cpu: "1"
+  deploymentPlan_resources_limits_memory: 2Gi
+  deploymentPlan_resources_requests_cpu: 500m
+  deploymentPlan_resources_requests_memory: 1Gi
+  deploymentPlan_storage_size: 25Gi
+  users:
+    user1:user1Pass
+  roles:
+    
+
+
