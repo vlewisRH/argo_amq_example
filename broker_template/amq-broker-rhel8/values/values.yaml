@@ -31,5 +31,9 @@ amq_broker:
   deploymentPlan_resources_requests_cpu: 500m
   deploymentPlan_resources_requests_memory: 1Gi
   deploymentPlan_storage_size: 25Gi
+  users:
+    user1:user1Pass
+  roles:
+    
 
 
